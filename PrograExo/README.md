@@ -6,6 +6,7 @@ Bloc 1, Quadrimestre 2 ( C/C++ )
 * Examen blanc.
 
 ### B2Q1
+## Test
 Bloc2, Quadrimestre 1 ( C++ - orienté objet )
 * 3 labos
 * l'exercice côté
