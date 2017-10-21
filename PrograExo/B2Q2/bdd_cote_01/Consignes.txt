@@ -1,0 +1,38 @@
+1. couche d'accès aux données 
+	>AgenceImmobilliere
+		> Quartier
+		> Logement
+
+  * recupererQuartier()  > dataset avec les libellés de quartiers sans doublons
+  * recupererIdQuartier( nomQuartier ) > un entier contenant idQuartier
+  * recupererLogementParQuartier( nomQuartier ) > dataset logements dont le quartier = nomQuartier
+  * AjouterLogement(nLogement, type, idQuartier, num, rue, superficie, loyer) > true si bien ajouté, false sinon
+
+2. couche métier
+  2 classes : 
+	* Classe Quartier
+		> données membres, propriétés et constructeurs
+		> recupererQuartier() > dataset [ f(couche access) ]
+		> rrecupererIdQuartier(nomQuartier) > entier [f(couche access)]
+	* Classe Logement
+		> données membres, propriétés et constructeurs
+		> recupererLogementParQuartier() > dataset
+		> ajouterLogement() > access
+		> Premier(), Suivant(), Precedent(), Dernier() : parcourir enregistrements de la table Logement
+
+3. Interface
+  (( voir photo ))
+
+4. Gestion des événements
+  * Quand le formulaire est chargé, la zone de liste combinée doit être remplie avec les libellés 
+  en utilisant la fonction recupererQuartier de la couche métier.
+  * Quand l'utilisateur sélectionnne un nom de quartier, le premier logement doit être affiché dans 
+  la zone de groupe (utilisez la fonciton recupererLogementParQuartier de la couche métier).
+  * Les boutons |<, <, > et >| permettent de parcourir les autres lgoements grâce aux fonctions créées
+  dans la couche métier.
+  * Les boutons Nouveau et Enregistrer rendent la zone de texte correspondant à l'id du quartier
+  inaccessible en écriture. La valeur id Quartier correspond au nom de quartier choisi dans la zone 
+  de liste combinée. Il est récupéré grâce à la fonction recupererIdParQuartier de la couche métier.
+  * Le bouton Nouveau vide les zones de texte.
+  * Le bouton Enregistrer permet d'ajouter les informations entrées dans la base de données en utilisant 
+  * la fonction ajouterLogement de la couche métier.
