@@ -1,7 +1,0 @@
-insert into controle (codeE, codeI) VALUES (2,1)
-insert into controle (codeE, codeI) VALUES (1,2)
-insert into controle (codeE, codeI) VALUES (3,2)
-insert into controle (codeE, codeI) VALUES (4,2)
-insert into controle (codeE, codeI) VALUES (5,1)
-insert into controle (codeE, codeI) VALUES (8,3)
-insert into controle (codeE, codeI) VALUES (6,1)
