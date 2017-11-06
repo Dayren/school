@@ -4,10 +4,11 @@ Arduino class assignment
 The client of an [A]rduino [Y]ùn [K]eyboard [O]ver [I]nternet. A simple CLI client sending your keys presses (or string) over UDP, understandable for the Arduino.
 
 ## download
-If you only want the client : [x64 Client](https://github.com/NamiGYJ/aykoi/raw/master/client/x64/aykoi.exe), [x86 client](https://github.com/NamiGYJ/aykoi/raw/master/client/x86/aykoi.exe)
+If you only want the client : [64bit Client](https://github.com/namigyj/school/raw/master/2B23INFOB/client/x64/aykoi.exe)
+The Yùn ressources : [zip containing .ino & .py](https://github.com/namigyj/school/raw/master/2B23INFOB/y%C3%B9n-resources/yun-resources.zip)
 
 ## Installation
-Make sure your yun is connected to a wifi, or that your computer is connected to the yun's wifi.
+Make sure your yun is connected to a wifi, or verify your computer is connected to the yun's wifi.
 Copy udpreadprint.py in /usr/bin/ of the linino.
 You can either use scp or ncat. for example :
 ```sh
@@ -18,6 +19,7 @@ or winscp on windows.
 Compile & upload the sketch.ino on the arduino.
 
 If you weren't able to connect to a wifi AP for some reason, and you don't want to completely reset the yùn, you can do the following : upload the sketch first, configure a mobile hotspot with as SSID "lourd", and password "ubuntu69". You should then be able to see the ip address of the connected devices to your AP and SCP the .py on it aswell as send the key presses to it.
+
 ## Usage
 Default ip is 192.168.1.26, default port is 10222. The port should be the same as the one in 'udpreadprint.py'
 You can send 3 types of data to the Arduino : up to 3 key presses, an entire string, or a delay (putting the arduino in wait() for the amount of the delay).

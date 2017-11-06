@@ -1,6 +1,6 @@
 ;* Projet : Labo 04                                                     *
 ;************************************************************************
-;* Auteur : (namigyj)                                                   *
+;* Auteur : (namigyj) & B. Gaillez                                      *
 ;*                                                                      *
 ;* Date : 20/10/2016                                                    *
 ;************************************************************************
@@ -106,7 +106,7 @@ GETANAL
 
 
 
-; **************************** CODE KHAIM ****************************
+; **************************** CODE (NGYJ) ****************************
 ; on a 8 LEDS, on doit donc diviser la tranche en 8
 ; => les 3 bits de poids forts sont les seuls qui nous intéresse
 
