@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setQuestionsTxt();
         Log.d("androquizz", "on create with "+currentQuestionIndex);
-        loadfromfile();
+        try { loadfromfile(); } catch (Exception e) { e.printStackTrace(); };
         if(savedInstanceState != null) {
             currentQuestionIndex = savedInstanceState.getInt(CURRENT_QUESTION_INDEX);
             Log.d("androquizz", "got "+currentQuestionIndex);
@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.tv_score);
         /* [3] */
         score.setText(currentScore + "/" + questions.size());
-        loadLastScore();
+        Log.d("androquizz", "loading from database");
+        try { loadLastScore(); } catch (Exception e) { e.printStackTrace(); }
     }
 
     private void setQuestions() {
@@ -225,7 +226,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadfromfile() {
         File file = new File(getApplicationContext().getFilesDir(), FILENAME);
-        if (!file.exists()) Log.d("androQuizz", "file doesn't exist");
+        if (!file.exists()) {
+            Log.e("androQuizz", "file doesn't exist");
+            return;
+        }
         try{
             InputStreamReader istr = new InputStreamReader(new FileInputStream(file));
             int i = 0;
