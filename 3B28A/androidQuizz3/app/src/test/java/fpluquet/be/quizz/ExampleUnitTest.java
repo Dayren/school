@@ -2,6 +2,8 @@ package fpluquet.be.quizz;
 
 import org.junit.Test;
 
+import fpluquet.be.quizz.sqlite.MySQLiteHelper;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,4 +16,5 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +19,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.nio.Buffer;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import fpluquet.be.quizz.R;
+import fpluquet.be.quizz.models.GameModel;
 import fpluquet.be.quizz.models.QuestionModel;
+import fpluquet.be.quizz.sqlite.MySQLiteHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,15 +53,16 @@ public class MainActivity extends AppCompatActivity {
             currentQuestionIndex = savedInstanceState.getInt(CURRENT_QUESTION_INDEX);
             Log.d("androquizz", "got "+currentQuestionIndex);
         }
-        launchNextQuestion();
     }
     @Override
     protected void onStart() {
-        super.onResume();
+        super.onStart();
         TextView score = (TextView) findViewById(R.id.tv_score);
+        /* [3] */
         score.setText(currentScore + "/" + questions.size());
-        Log.v("androQuizz", "onResume() called");
+        loadLastScore();
     }
+
     private void setQuestions() {
         questions = new ArrayList<>();
         // add a first question
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(currentQuestionIndex >= questions.size()) {
             Toast.makeText(this, "Plus de questions...", Toast.LENGTH_SHORT).show();
+            saveScore();
             return;
         }
         QuestionModel question = questions.get(currentQuestionIndex);
@@ -180,8 +188,17 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(CURRENT_QUESTION_INDEX, currentQuestionIndex);
     }
 
-    // todo[2] : ajoutez une fonctionnalité "continuer la dernière partie" (le numéro de la question courante est alors sauvé dans un fichier)
-    // todo[3] : ajoutez le score courant (à sauver dans le fichier)
+    // done todo[2] : ajoutez une fonctionnalité "continuer la dernière partie" (le numéro de la question courante est alors sauvé dans un fichier)
+    public void onReplayClick(View view) {
+        launchNextQuestion();
+    }
+    public void onNewClick(View view) {
+        currentQuestionIndex = 0;
+        currentScore = 0;
+        launchNextQuestion();
+    }
+
+    // done todo[3] : ajoutez le score courant (à sauver dans le fichier) + todo[2]
     private void saveinfile() {
         File file = new File(getApplicationContext().getFilesDir(), FILENAME);
         try{
@@ -237,8 +254,21 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.v("androQuizz", "saveqnum: loaded " + currentQuestionIndex + " & " + currentScore);
     }
-
     // todo[4] : retenez dans la base de données toutes les parties (la date et le score obtenu)
+    protected void loadLastScore() {
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        GameModel gm = db.getLastScore();
+        if (gm == null) return;
 
+        TextView lscore = (TextView) findViewById(R.id.tv_lscore);
+        lscore.setText(gm.toString());
+    }
+    protected void saveScore() {
+        String t = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(Calendar.getInstance().getTime());
+        String s = currentScore + "/" + questions.size();
+
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        db.addScore(new GameModel(t, s));
+    }
 
 }

@@ -24,11 +24,19 @@
                 android:id="@+id/tv_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:text="No score"
-                android:textAlignment="center"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/tv_lscore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
-                android:layout_marginTop="50dp"/>
+                android:layout_weight="1"
+                android:text="No score"
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btn_new"
@@ -38,6 +46,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
+                android:onClick="onNewClick"
                 android:text="New Game" />
 
             <Button
@@ -47,6 +56,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
+                android:onClick="onReplayClick"
                 android:text="Replay previous" />
         </LinearLayout>
 
