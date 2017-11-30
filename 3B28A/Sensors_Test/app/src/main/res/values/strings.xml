@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sensors_Test</string>
+    <string name="res_by">btn_y :</string>
+    <string name="res_bx">btn_x :</string>
+    <string name="res_x">x :</string>
+    <string name="res_y">y :</string>
+</resources>
