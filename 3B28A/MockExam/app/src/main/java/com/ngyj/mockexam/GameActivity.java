@@ -1,5 +1,7 @@
 package com.ngyj.mockexam;
 
+import android.content.Context;
+import android.content.Intent;
 import android.icu.lang.UCharacter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,24 +16,37 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
+    public static final boolean TESTING = false;
+
+    public static final String FILENAME = "com.ngyj.mockexam.save";
+    public static final String FILE_EXISTS = "com.ngyj.mockexam.fileExists";
+    public static final String GAME_RESULT = "com.ngyj.mockexam.gameResult";
+    public static final String GAME_WORD = "com.ngyj.mockexam.gameWord";
+
     private static final String CURRENT_WORD = "com.ngyj.mockexam.currentWord";
     private static final String CURRENT_CORRECT= "com.ngyj.mockexam.currentCorrect";
     private static final String CURRENT_WRONG = "com.ngyj.mockexam.currentWrong";
     private static final String CURRENT_LEFT = "com.ngyj.mockexam.currentLeft";
-    private static final String CURRENT_DISABLED = "com.ngyj.mockexam.currentDisabled";
 
     private String word;
     private String correct;
     private String wrong;
     private int tries_left;
-    private ArrayList<String> wordlist;
 
     /* disabled buttons "list" */
     private String disabled;
@@ -41,63 +56,39 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        tries_left = 10;
-        word = "";
-        /* todo: liste dynamique de type primitif char ???? */
-        correct = "";
-        wrong = "";
-        disabled = "";
-        setWord();
-        /* todo : make a list of all buttons and save their state */
         if(savedInstanceState != null) {
             word = savedInstanceState.getString(CURRENT_WORD);
             correct = savedInstanceState.getString(CURRENT_CORRECT);
             wrong = savedInstanceState.getString(CURRENT_WRONG);
-            tries_left = savedInstanceState.getInt(CURRENT_LEFT);
-            disabled = savedInstanceState.getString(CURRENT_DISABLED);
+        } else if (getIntent().getBooleanExtra(FILE_EXISTS, false)) {
+            getGame();
+        } else {
+            correct = "";
+            wrong = "";
+            getWord();
         }
+        tries_left = 10 - wrong.length();
+
+        /* debug */
+        if(TESTING)
+            word = "POMME";
+
         display();
-        ((TextView) findViewById(R.id.tv_wrong)).setText(wrong);
-
-        TableLayout tl=findViewById(R.id.table);
-        tl.setStretchAllColumns(true);
-        tl.setShrinkAllColumns(true);
-        // pourquoi l'aréthmique sur char ne fonctionne pas ?
-        String[] a = {"A", "B", "C", "D", "E","F","G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-                "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-        int adx=0;
-        /* todo: create Rows dynamically too */
-        ArrayList<TableRow> trlist = new ArrayList<>();
-        trlist.add((TableRow) findViewById(R.id.tr1));
-        trlist.add((TableRow) findViewById(R.id.tr2));
-        trlist.add((TableRow) findViewById(R.id.tr3));
-        trlist.add((TableRow) findViewById(R.id.tr4));
-        trlist.add((TableRow) findViewById(R.id.tr5));
-
-        for(int j = 0; j < 5; j++) {
-            int max = 6;
-            if(j == 4) max = 2;
-            for (int i = 0; i < max; i++) {
-                Button btn = new Button(this);
-                btn.setText(a[adx]);
-                btn.setOnClickListener(new clickHandler());
-                trlist.get(j).addView(btn);
-                if(disabled.contains(a[adx])) {
-                    btn.setAlpha(0.4F);
-                    btn.setEnabled(false);
-                }
-                adx++;
-            }
-        }
-
-
+        alphabet();
 
     }
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onDestroy() {
+        super.onDestroy();
+        deleteFile(FILENAME);
+        Log.v("I/O", "filed saved");
     }
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveGame();
+        Log.v("I/O", "filed saved");
+    }
     @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
@@ -105,27 +96,25 @@ public class GameActivity extends AppCompatActivity {
         state.putSerializable(CURRENT_LEFT, tries_left);
         state.putSerializable(CURRENT_WRONG, wrong);
         state.putSerializable(CURRENT_CORRECT, correct);
-        state.putSerializable(CURRENT_DISABLED, disabled);
     }
 
+    private void alphabet() {
+        TableLayout tl=findViewById(R.id.table);
+        tl.setStretchAllColumns(true);
+        tl.setShrinkAllColumns(true);
+        TableRow tr = null;
+        for(char a = 'A'; a <= 'Z'; a++) {
+            if((a-'A')%6 ==  0)
+                tl.addView(tr = new TableRow(this));
 
-    private class clickHandler implements View.OnClickListener {
-        public void onClick(View view) {
-            Button btn = (Button)view;
-            TextView tvf = findViewById(R.id.tv_wrong);
-            TextView tvl = findViewById(R.id.tv_left);
-
-            Toast.makeText(GameActivity.this, ""+btn.getId(), Toast.LENGTH_SHORT).show();
-            if(!Verify(btn.getText())) {
-                --tries_left;
-                if(tries_left == 0) {
-
-                }
+            Button btn = new Button(this);
+            btn.setText(""+a);
+            btn.setOnClickListener(new clickHandler());
+            tr.addView(btn);
+            if(wrong.contains(""+a) || correct.contains(""+a)) {
+                btn.setAlpha(0.4F);
+                btn.setEnabled(false);
             }
-            display();
-            btn.setAlpha(0.4f);
-            btn.setEnabled(false);
-            disabled += btn.getText();
         }
     }
 
@@ -143,41 +132,62 @@ public class GameActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tv_left)).setText(""+tries_left);
         ((TextView) findViewById(R.id.tv_wrong)).setText(""+wrong);
     }
-    /* todo : use a char */
-    private boolean Verify(CharSequence ch) {
-        String c = (String)ch;
-        if(word.contains(c.toUpperCase())) {
-            correct += c.toUpperCase();
-            return true;
-        } else {
-            wrong += c.toUpperCase();
-            return false;
+    
+    private class clickHandler implements View.OnClickListener {
+        public void onClick(View view) {
+            Button btn = (Button)view;
+
+            btn.setAlpha(0.4f);
+            btn.setEnabled(false);
+            verify(btn.getText().toString());
+            display();
+            if(!((TextView) findViewById(R.id.tv_word)).getText().toString().contains("_"))
+                end(true);
+            else if(tries_left == 0)
+                end(false);
         }
     }
 
-    private void setWord() {
+    private void verify(String c) {
+        if(word.contains(c))
+            correct += c;
+        else {
+            wrong += c;
+            --tries_left;
+        }
+    }
+
+    private void end(boolean r) {
+        Intent i = new Intent(this, ResultActivity.class);
+        if(r) {
+            i.putExtra(GAME_RESULT, true);
+        } else{
+            i.putExtra(GAME_RESULT, false);
+            i.putExtra(GAME_WORD, word);
+        }
+        finish();
+        startActivity(i);
+    }
+
+    private void getWord() {
         InputStream instream = null;
         try {
             instream = getResources().openRawResource(R.raw.wordlist);
-            /* ins = getResources().openRawResource(getResources().getIdentifier(
-                    "questions.txt", "raw", getPackageName()));*/
         } catch (Exception e) {
             Log.e("MockExam I/O", "failed opening InputStream");
             e.printStackTrace();
         }
-
         if (instream == null) {
             Log.e("MockExam I/O", "Cannot open raw/wordlist.txt as stream");
             return;
         }
         BufferedReader br = new BufferedReader(new InputStreamReader(instream));
-        wordlist = new ArrayList<String>();
+        ArrayList<String> wordlist = new ArrayList<String>();
         String line = "";
+
         while((line = getLine(br)) != null)
             wordlist.add(line);
-
         word = wordlist.get((int)(Math.random() * wordlist.size())).toUpperCase();
-
         try {
             br.close();
             instream.close();
@@ -185,6 +195,7 @@ public class GameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private String getLine(BufferedReader br) {
         String line = "";
         try {
@@ -195,4 +206,27 @@ public class GameActivity extends AppCompatActivity {
         return line;
     }
 
+    private void saveGame() {
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
+            osw.write(String.format("%s\n%s\n%s\n", word, correct, wrong));
+            osw.flush();
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getGame() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(getApplicationContext().getFilesDir(), FILENAME)));
+            if((word = br.readLine()).isEmpty()) word = "";
+            if((correct = br.readLine()).isEmpty()) correct = "";
+            if((wrong = br.readLine()) == null) wrong = "";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

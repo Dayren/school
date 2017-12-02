@@ -6,75 +6,82 @@
     android:layout_height="match_parent"
     tools:context="com.ngyj.mockexam.GameActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:layout_editor_absoluteY="176dp">
 
-        <TextView
-            android:id="@+id/tv_left"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="10"
-            android:textAlignment="center"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_word"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif"
-            android:text="PO__E"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="36sp"
-            android:typeface="sans" />
-
-        <TextView
-            android:id="@+id/tv_wrong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text=""
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:typeface="sans" />
-
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow
-                android:id="@+id/tr1"
+            <TextView
+                android:id="@+id/tv_left"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="10"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
-            <TableRow
-                android:id="@+id/tr2"
+            <TextView
+                android:id="@+id/tv_word"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif"
+                android:text="PO__E"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="36sp"
+                android:typeface="sans" />
 
-            <TableRow
-                android:id="@+id/tr3"
+            <TextView
+                android:id="@+id/tv_wrong"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text=""
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:typeface="sans" />
 
-            <TableRow
-                android:id="@+id/tr4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:id="@+id/tr5"
+            <TableLayout
+                android:id="@+id/table"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
+                <TableRow
+                    android:id="@+id/tr1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:id="@+id/tr2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:id="@+id/tr3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:id="@+id/tr4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:id="@+id/tr5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

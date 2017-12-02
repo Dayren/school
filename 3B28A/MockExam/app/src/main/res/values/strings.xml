@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MockExam</string>
+    <string name="won">Bravo !</string>
+    <string name="lost">Perdu :(</string>
 </resources>
