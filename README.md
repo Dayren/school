@@ -12,10 +12,10 @@ solutions to past exercises or labs to share with other students
 * [__2B23INFOB__](https://github.com/namigyj/school/tree/master/2B23B) Projet de microélectronique(Q2) [arduino/C]
 
 ### Bloc 3
-* [__3B27INFOA__](https://github.com/namigyj/school/tree/master/3B27A) exo/exemples de Programmation [C#]
+* [__3B27INFOA__](https://github.com/namigyj/school/tree/master/3B27A) exo/exemples de Programmation [C#]	
 * [__3B27INFOB__](https://github.com/namigyj/school/tree/master/3B27B) exos de Programmation [XAML]
 * [__3B28INFOA__](https://github.com/namigyj/school/tree/master/3B28A) Labos de Programmation [Android]
 * [__3B28INFOB__](https://github.com/namigyj/school/tree/master/3B28B) Labos de Programmation [Web]
 * [__3B29INFOA__](https://github.com/namigyj/school/tree/master/3B29A) Labo de microélectronique (groupe) [?]
 * [__3B29INFOB__](https://github.com/namigyj/school/tree/master/3B29B) Labo de microélectronique (solo) [C/?]
-* [__3B31INFO__](https://github.com/namigyj/school/tree/master/3B31) Séminaires
+* [__3B31INFO__](https://github.com/namigyj/school/tree/master/3B31) Séminaires	

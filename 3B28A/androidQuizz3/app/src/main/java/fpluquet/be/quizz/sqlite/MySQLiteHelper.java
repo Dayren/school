@@ -15,14 +15,14 @@ import fpluquet.be.quizz.models.GameModel;
  */
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "ScoreDB";
-    private static final int DB_VERSION = 1;
+    public static final String DB_NAME = "ScoreDB";
+    public static final int DB_VERSION = 1;
 
     /* column names */
-    private static final String SCORES_T = "scores";
-    private static final String KEY_C = "id";
-    private static final String DATE_C = "date";
-    private static final String SCORE_C = "score";
+    public static final String SCORES_T = "scores";
+    public static final String DATE_C = "date";
+    public static final String KEY_C = "id";
+    public static final String SCORE_C = "score";
 
     private static final String[] COLUMNS = {KEY_C, DATE_C, SCORE_C };
 
@@ -83,21 +83,3 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

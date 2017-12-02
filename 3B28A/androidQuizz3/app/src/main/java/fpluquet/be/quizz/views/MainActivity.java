@@ -1,6 +1,7 @@
 package fpluquet.be.quizz.views;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setQuestionsTxt();
         Log.d("androquizz", "on create with "+currentQuestionIndex);
+        // load file
         try { loadfromfile(); } catch (Exception e) { e.printStackTrace(); };
+        // load savedstate
         if(savedInstanceState != null) {
             currentQuestionIndex = savedInstanceState.getInt(CURRENT_QUESTION_INDEX);
             Log.d("androquizz", "got "+currentQuestionIndex);
         }
+
+
     }
     @Override
     protected void onStart() {
@@ -62,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
         score.setText(currentScore + "/" + questions.size());
         Log.d("androquizz", "loading from database");
         try { loadLastScore(); } catch (Exception e) { e.printStackTrace(); }
+
+        // button visible
+        if (currentQuestionIndex == -1) {
+            findViewById(R.id.btn_replay).setVisibility(View.INVISIBLE);
+            findViewById(R.id.tv_score).setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setQuestions() {
@@ -270,6 +281,7 @@ public class MainActivity extends AppCompatActivity {
     protected void saveScore() {
         String t = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(Calendar.getInstance().getTime());
         String s = currentScore + "/" + questions.size();
+        currentQuestionIndex = -1;
 
         MySQLiteHelper db = new MySQLiteHelper(this);
         db.addScore(new GameModel(t, s));
