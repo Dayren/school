@@ -12,6 +12,7 @@ solutions to past exercises or labs to share with other students
 * [__2B23INFOB__](https://github.com/namigyj/school/tree/master/2B23B) Projet de microélectronique(Q2) [arduino/C]
 
 ### Bloc 3
+* [__3B26INFO__](https://github.com/namigyj/school/tree/master/3B26) Systèmes d'exploitation [sysadmin Linux] 
 * [__3B27INFOA__](https://github.com/namigyj/school/tree/master/3B27A) exo/exemples de Programmation [C#]	
 * [__3B27INFOB__](https://github.com/namigyj/school/tree/master/3B27B) exos de Programmation [XAML]
 * [__3B28INFOA__](https://github.com/namigyj/school/tree/master/3B28A) Labos de Programmation [Android]
